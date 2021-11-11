@@ -1,0 +1,31 @@
+import matplotlib.pyplot as plt
+import pandas as pds
+file =('D:\\titanic_train.csv')
+newData = pds.read_csv(file)
+
+Three_df=newData[['Age','Sex','Survived']]
+print(Three_df)
+
+MenAliveFunction =Three_df.apply(lambda x: True
+if x['Sex'] == "male" and x['Survived'] == 1 else False, axis=1)
+MenDeadFunction =Three_df.apply(lambda x: True
+if x['Sex'] == "male" and x['Survived'] == 0 else False, axis=1)
+WomenAliveFunction =Three_df.apply(lambda x: True
+if x['Sex'] == "female" and x['Survived'] == 1 else False, axis=1)
+WomenDeadFunction =Three_df.apply(lambda x: True
+if x['Sex'] == "female" and x['Survived'] == 0 else False, axis=1)
+# Count number of True in the series
+
+Status=['Alive','Dead']
+Men=[len(MenAliveFunction[MenAliveFunction == True].index),
+	 len(MenDeadFunction[MenDeadFunction == True].index)]
+Women=[len(WomenAliveFunction[WomenAliveFunction == True].index),
+	   len(WomenDeadFunction[WomenDeadFunction == True].index)]
+plt.bar(Status,Men,0.4,label="Men")
+plt.bar(Status,Women,0.4,bottom=Men,label="Women")
+
+print(Men,Women)
+
+plt.ylabel("count")
+plt.legend()
+plt.show()
